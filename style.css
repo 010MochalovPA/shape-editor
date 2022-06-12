@@ -78,6 +78,9 @@ table {
   align-items: center;
   border: solid 2px #7395AE;
   border-radius: 6px;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  user-select: none; 
 }
 
 .btnTool:hover{

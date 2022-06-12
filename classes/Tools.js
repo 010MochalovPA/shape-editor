@@ -3,14 +3,14 @@ import Tool from './Tool.js';
 
 export default class Tools{
   constructor(canvas){
-    this.tools = new Map();
+    this.tools = [];
     this.canvas = canvas;
     this.fillTools();
   };
   
   fillTools(){
     Object.entries(drawingFunctions).forEach(([name, func]) => {
-      this.tools.set(name, new Tool(name, () => func(this.canvas)));
+      this.tools.push(new Tool(name, () => func(this.canvas)));
     });
   }
 
@@ -27,19 +27,20 @@ export default class Tools{
     toolsElement.id = 'tools';
     document.body.append(toolsElement);
     
-    this.tools.forEach((tool, name) => {
+    this.tools.forEach((tool) => {
+      const toolName = tool.getName();
       const btnTool = document.createElement('button');
       const icon = document.createElement('img');
 
-      icon.src = `./assets/icons/${name}.png`;
-      icon.alt = `${name}.png`;
+      icon.src = `./assets/icons/${toolName}.png`;
+      icon.alt = `${toolName}.png`;
       
       icon.className = 'icon';
       btnTool.className = 'btnTool';
 
       btnTool.append(icon);
       toolsElement.append(btnTool);
-      btnTool.innerHTML += name;
+      btnTool.innerHTML += toolName;
       btnTool.addEventListener('click', tool.getFunction());
     })
 

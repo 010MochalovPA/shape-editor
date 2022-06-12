@@ -8,4 +8,7 @@ export default class Tool{
     return this.func;
   }
 
+  getName(){
+    return this.name;
+  }
 }
