@@ -1,3 +1,4 @@
+import collection from './Collection.js';
 
 class Shapes{
   constructor(){
@@ -7,6 +8,8 @@ class Shapes{
   addShape(name, shape, canvas){
     this.shapes.set(`${name}${this.shapes.size}`, shape);
     canvas.addElement(shape);
+    collection.addElement(shape);
+    collection.drawCollection(canvas.getClone());
   }
 
   getShapes(){

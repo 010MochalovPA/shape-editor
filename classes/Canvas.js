@@ -1,21 +1,41 @@
-import shapes from './Shapes.js';
 import EditPoint from './EditPoint.js';
+import collection from './Collection.js';
 export default class Canvas{
-  constructor(){
+  constructor(cloneCanvas){
     this.canvas = document.createElement('canvas');
     this.canvas.id = 'canvas';
-    this.canvas.width = window.innerWidth;
+    this.canvas.width = window.innerWidth -300;
     this.canvas.height = window.innerHeight - 78;
+    this.cloneCanvas = cloneCanvas;
     this.isMouseDown = false;
     this.elements = [];
     this.editPoints = [];
+    this.editShape = null;
   }
 
-  init() {
+  init(parrent) {
     if (document.querySelector('#canvas')) {
       document.querySelector('#canvas').remove();
     }
-    document.body.append(this.canvas);
+    parrent.append(this.canvas);
+    let ctx = this.canvas.getContext('2d');
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0,0,this.canvas.width,this.canvas.height);
+    ctx.fill();
+  }
+
+  addEditShape(shape){
+    this.editShape = shape;
+  }
+
+
+  getClone(){
+    return this.cloneCanvas;
+  }
+  
+  clearEdit(){
+    this.editPoints = [];
+    this.editShape = null;
   }
 
   addElement(element){
@@ -40,6 +60,7 @@ export default class Canvas{
 
   changeMouseStatusOnFalse(){
     this.isMouseDown = false;
+    collection.drawCollection(cloneCanvas);
   }
 
   checkClick(e){
@@ -49,11 +70,11 @@ export default class Canvas{
     let y = e.clientY - rect.top;
     let result = '';
     this.editPoints.forEach(point => {
-      if (point.draw(x, y)) result = point.draw(x, y);
+      if (point.draw(this.canvas, x, y)) result = point.draw(this.canvas, x, y);
     });
     if (result) return result;
     this.elements.forEach(element => {
-      if (element.draw(x, y)) result = element.draw(x, y);
+      if (element.draw(this.canvas, x, y)) result = element.draw(this.canvas, x, y);
     });
     return result;
   }
@@ -63,12 +84,13 @@ export default class Canvas{
       let ctx = this.canvas.getContext('2d');
       ctx.fillStyle = 'white';
       ctx.fillRect(0,0,this.canvas.width,this.canvas.height);
+      ctx.fill();
       this.elements.forEach(shape => {
-        shape.draw();
+        shape.draw(this.canvas);
       });
+      if (this.editShape) this.editShape.drawEditArea();
       this.editPoints.forEach(point => {
-        console.log('перерисовка point')
-        point.draw();
+        point.draw(this.canvas);
       });
     }
     

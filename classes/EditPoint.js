@@ -6,14 +6,15 @@ export default class EditPoint{
     this.shape = shape;
   }
 
-  draw(checkX, checkY){
-    if (this.canvas.getContext){
-      let ctx = this.canvas.getContext('2d');
+  draw(canvas, checkX, checkY){
+    if (canvas.getContext){
+      let ctx = canvas.getContext('2d');
       ctx.fillStyle = 'yellow';
       ctx.strokeStyle = 'black';
-      ctx.lineWidth = 2;
+      ctx.lineWidth = 4;
+      ctx.setLineDash([]);
       ctx.beginPath();
-      ctx.arc(this.x, this.y, 4, 0, Math.PI*2);
+      ctx.arc(this.x, this.y, 6, 0, Math.PI*2);
       ctx.stroke();
       ctx.fill();
       if (ctx.isPointInPath(checkX, checkY)) return this;

@@ -1,15 +1,27 @@
 import Tools from "./classes/Tools.js";
-import Canvas from './classes/Canvas.js';
+import Canvas from "./classes/Canvas.js";
 import Editor from "./classes/Editor.js";
+import CloneCanvas from "./classes/CloneCanvas.js";
 
-const canvas = new Canvas;
+
+const cloneCanvas = new CloneCanvas;
+const cloneCanvasElement = cloneCanvas.getCanvas();
+
+const canvas = new Canvas(cloneCanvasElement);
 const canvasElement = canvas.getCanvas();
 const editor = new Editor(canvasElement);
 
 const tools = new Tools(canvas);
 
 tools.init();
-canvas.init();
+
+const wrapper = document.createElement('div');
+wrapper.className = 'wrapper'
+document.body.append(wrapper);
+
+
+cloneCanvas.init(wrapper);
+canvas.init(wrapper);
 
 document.body.addEventListener('mouseup', () => canvas.changeMouseStatusOnFalse());
 

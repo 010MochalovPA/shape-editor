@@ -26,6 +26,7 @@ footer, header, hgroup, menu, nav, section {
 body {
 	line-height: 1;
   box-sizing: border-box;
+  background-color: bisque;
 }
 * {
 	box-sizing: border-box;
@@ -60,6 +61,15 @@ table {
   display: block;
 }
 
+#cloneCanvas{
+  display: block;
+  width: 300px;
+  height: 225px;
+  border: solid 1px #557A95;
+}
+.wrapper{
+  display: flex;
+}
 .icon{
   width: 24px;
   height: 24px;
