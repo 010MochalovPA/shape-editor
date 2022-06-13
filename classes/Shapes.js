@@ -1,10 +1,12 @@
+
 class Shapes{
   constructor(){
     this.shapes = new Map();
   }
 
-  addShape(name, shape){
+  addShape(name, shape, canvas){
     this.shapes.set(`${name}${this.shapes.size}`, shape);
+    canvas.addElement(shape);
   }
 
   getShapes(){
@@ -15,13 +17,7 @@ class Shapes{
     return this.shapes.size;
   }
 
-  getClicked(MouseX, MouseY){
-    let result = '';
-    this.shapes.forEach(shape => {
-      if (shape.drawShape(MouseX, MouseY)) result = shape.drawShape(MouseX, MouseY);
-    })
-    return result;
-  }
+  
 }
 
 export default new Shapes();
