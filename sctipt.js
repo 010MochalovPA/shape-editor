@@ -4,7 +4,7 @@ import Editor from "./classes/Editor.js";
 import CloneCanvas from "./classes/CloneCanvas.js";
 
 
-const cloneCanvas = new CloneCanvas;
+const cloneCanvas = new CloneCanvas();
 const cloneCanvasElement = cloneCanvas.getCanvas();
 
 const canvas = new Canvas(cloneCanvasElement);
@@ -23,12 +23,13 @@ document.body.append(wrapper);
 cloneCanvas.init(wrapper);
 canvas.init(wrapper);
 
-document.body.addEventListener('mouseup', () => canvas.changeMouseStatusOnFalse());
+document.addEventListener('mouseup', () => canvas.changeMouseStatusOnFalse());
 
 canvasElement.addEventListener('mousedown', (event) => editor.editShape(event, canvas));
 
 canvasElement.addEventListener('mousemove', (event) => editor.moveShape(event, canvas));
 
+document.addEventListener('keydown', (event) => editor.keyPressed(event, canvas));
 
 export default editor;
 

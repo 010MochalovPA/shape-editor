@@ -4,7 +4,7 @@ export default class Canvas{
   constructor(cloneCanvas){
     this.canvas = document.createElement('canvas');
     this.canvas.id = 'canvas';
-    this.canvas.width = window.innerWidth -300;
+    this.canvas.width = window.innerWidth - 300;
     this.canvas.height = window.innerHeight - 78;
     this.cloneCanvas = cloneCanvas;
     this.isMouseDown = false;
@@ -13,11 +13,15 @@ export default class Canvas{
     this.editShape = null;
   }
 
-  init(parrent) {
+  getElements(){
+    return this.elements;
+  }
+  
+  init(wrapper) {
     if (document.querySelector('#canvas')) {
       document.querySelector('#canvas').remove();
     }
-    parrent.append(this.canvas);
+    wrapper.append(this.canvas);
     let ctx = this.canvas.getContext('2d');
     ctx.fillStyle = 'white';
     ctx.fillRect(0,0,this.canvas.width,this.canvas.height);
@@ -27,7 +31,6 @@ export default class Canvas{
   addEditShape(shape){
     this.editShape = shape;
   }
-
 
   getClone(){
     return this.cloneCanvas;
@@ -93,6 +96,14 @@ export default class Canvas{
         point.draw(this.canvas);
       });
     }
-    
+  }
+
+  deleteShape(removableShape){
+    const indexRemovableShape = this.elements.indexOf(removableShape);
+    this.elements.splice(indexRemovableShape, 1);
+    collection.deleteElement(removableShape);
+    this.clearEdit();
+    collection.drawCollection(cloneCanvas);
+    this.redraw();
   }
 }

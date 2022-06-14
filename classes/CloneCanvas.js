@@ -6,11 +6,11 @@ export default class CloneCanvas{
     this.canvas.height = window.innerHeight - 78;
   }
 
-  init(parrent) {
+  init(wrapper) {
     if (document.querySelector('#cloneCanvas')) {
       document.querySelector('#cloneCanvas').remove();
     }
-    parrent.append(this.canvas);
+    wrapper.append(this.canvas);
     let ctx = this.canvas.getContext('2d');
     ctx.fillStyle = 'white';
     ctx.fillRect(0,0,this.canvas.width,this.canvas.height);

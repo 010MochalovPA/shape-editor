@@ -7,6 +7,11 @@ class Collection{
     this.collection.push(element)
   }
 
+  deleteElement(element){
+    const indexRemovableShape = this.collection.indexOf(element);
+    this.collection.splice(indexRemovableShape, 1);
+  }
+
   getCollection(){
     return this.collection;
   }
@@ -20,7 +25,6 @@ class Collection{
         element.draw(canvas);
       });
     }
-    
   }
 }
 

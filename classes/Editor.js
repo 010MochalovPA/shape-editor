@@ -15,11 +15,9 @@ export default class Editor{
   
 
   editShape(event, canvas){
-
     let rect = canvas.getCanvas().getBoundingClientRect();
     this.MouseX = event.clientX - rect.left;
     this.MouseY = event.clientY - rect.top;
-    
     this.target = canvas.checkClick(event);
     if (!this.target) {
       canvas.clearEdit();
@@ -48,7 +46,7 @@ export default class Editor{
       canvas.addEditPoints(this.target.getEditPoints(), this.target);
       if (canvas.getMouseStatus()){
         this.target.changePosition(this.MouseX - this.differenceX, this.MouseY - this.differenceY);
-        canvas.addEditShape(this.target);
+        canvas.addEditPoints(this.target.getEditPoints(), this.target);
         canvas.redraw();
       }
     } else if (this.target instanceof EditPoint) {
@@ -56,9 +54,15 @@ export default class Editor{
         const transformShape = this.target.getParentShape();
         transformShape.editScale(this.MouseX, this.MouseY);
         canvas.addEditPoints(transformShape.getEditPoints(), transformShape);
-        canvas.addEditShape(transformShape);
         canvas.redraw();
       }
     } 
+  }
+
+  keyPressed(event, canvas){
+    if (event.keyCode == 46){
+      canvas.deleteShape(this.target);
+    }
+    
   }
 }
