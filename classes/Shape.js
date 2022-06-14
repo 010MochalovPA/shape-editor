@@ -18,6 +18,22 @@ export default class Shape{
     this.isEdit = false;
   }
 
+  getX(){
+    return this.editArea.x;
+  }
+
+  getY(){
+    return this.editArea.y;
+  }
+
+  getWidth(){
+    return this.editArea.width;
+  }
+
+  getHeight(){
+    return this.editArea.height;
+  }
+
   getEditPoints(){
     return this.editPoints;
   }

@@ -7,6 +7,8 @@ class Shapes{
 
   addShape(name, shape, canvas){
     this.shapes.set(`${name}${this.shapes.size}`, shape);
+    console.log(canvas);
+    console.log(shape);
     canvas.addElement(shape);
     collection.addElement(shape);
     collection.drawCollection(canvas.getClone());

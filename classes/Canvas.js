@@ -1,5 +1,7 @@
 import EditPoint from './EditPoint.js';
 import collection from './Collection.js';
+import actions from './Actions.js';
+import Action from './Action.js';
 export default class Canvas{
   constructor(cloneCanvas){
     this.canvas = document.createElement('canvas');
@@ -99,6 +101,7 @@ export default class Canvas{
   }
 
   deleteShape(removableShape){
+    actions.addAction(new Action('delete', removableShape, removableShape.getX(), removableShape.getY(), removableShape.getWidth(), removableShape.getHeight()));
     const indexRemovableShape = this.elements.indexOf(removableShape);
     this.elements.splice(indexRemovableShape, 1);
     collection.deleteElement(removableShape);

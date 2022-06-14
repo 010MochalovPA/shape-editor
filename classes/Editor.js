@@ -1,6 +1,7 @@
 import Shape from './Shape.js';
 
 import EditPoint from "./EditPoint.js";
+import actions from './Actions.js';
 
 export default class Editor{
   constructor(canvas){
@@ -61,8 +62,12 @@ export default class Editor{
 
   keyPressed(event, canvas){
     if (event.keyCode == 46){
-      canvas.deleteShape(this.target);
+      if (this.target) canvas.deleteShape(this.target);
     }
     
+    if (event.ctrlKey && event.keyCode == 90) {
+      actions.revert(canvas);
+      console.log("Ctrl+Z");
+    }
   }
 }
