@@ -2,7 +2,7 @@ export default class EditPoint{
   constructor(x, y, canvas, shape){
     this.x = x;
     this.y = y;
-    this.canvas = canvas.getCanvas();
+    this.canvas = canvas;
     this.shape = shape;
   }
 

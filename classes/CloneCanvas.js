@@ -3,7 +3,7 @@ export default class CloneCanvas{
     this.canvas = document.createElement('canvas');
     this.parentCanvas = parentCanvas
     this.canvas.id = 'cloneCanvas';
-    this.canvas.width = window.innerHeight - 78;
+    this.canvas.width = window.innerWidth - 300;
     this.canvas.height = window.innerHeight - 78;
   }
 
@@ -11,6 +11,8 @@ export default class CloneCanvas{
     if (document.querySelector('#cloneCanvas')) {
       document.querySelector('#cloneCanvas').remove();
     }
+    this.canvas.style.width = this.parentCanvas.getWidth() / 4 + 'px';
+    this.canvas.style.height = this.parentCanvas.getHeight() / 4 + 'px';
     wrapper.append(this.canvas);
     let ctx = this.canvas.getContext('2d');
     ctx.fillStyle = 'white';

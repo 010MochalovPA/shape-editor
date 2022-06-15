@@ -63,12 +63,11 @@ table {
 
 #cloneCanvas{
   display: block;
-  width: 200px;
-  height: 200px;
   border: solid 1px #557A95;
 }
 .wrapper{
   display: flex;
+  justify-content: space-around;
 }
 .icon{
   width: 24px;
