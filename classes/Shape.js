@@ -13,7 +13,6 @@ export default class Shape{
       [this.x + this.width / 2, this.y - this.height / 2],
       [this.x + this.width / 2, this.y + this.height / 2],
     ]
-    this.isEdit = false;
   }
 
   getName(){
@@ -41,7 +40,6 @@ export default class Shape{
   }
 
   changePosition(x, y){
-    console.log('changePosition')
     if (x - this.width / 2 <= 8) x = this.width / 2 + 8;
     if (y - this.height / 2 <= 8) y = this.height / 2 + 8;
     if (x + this.width / 2 >= this.canvas.width - 8) x = this.canvas.width - this.width / 2 - 8;
@@ -70,16 +68,18 @@ export default class Shape{
       ctx.strokeStyle = 'black';
       ctx.rect(this.x - this.width / 2, this.y - this.height / 2, this.width, this.height);
       ctx.stroke();
-      
     }
   }
-
+  getXY(){
+    return [this.x,this.y];
+  }
+  
   editScale(MouseX, MouseY){
     if (MouseX < this.x && MouseY < this.y){
       const diffX = (this.x - this.width / 2) - MouseX;
-      const diffY = (this.y - this.height / 2)- MouseY;
-      this.width = this.width + (diffX);
-      this.height = this.height + (diffY);
+      const diffY = (this.y - this.height / 2) - MouseY;
+      this.width = this.width + diffX;
+      this.height = this.height + diffY;
       this.x = this.x - diffX / 2;
       this.y = this.y - diffY / 2;
       this.changeEditPoints();
@@ -87,8 +87,8 @@ export default class Shape{
     if (MouseX > this.x && MouseY < this.y) {
       const diffX = MouseX -(this.x + this.width / 2);
       const diffY = (this.y - this.height / 2) - MouseY;
-      this.width = this.width + (diffX);
-      this.height = this.height + (diffY);
+      this.width = this.width + diffX;
+      this.height = this.height + diffY;
       this.x = this.x + diffX / 2;
       this.y = this.y - diffY / 2;
       this.changeEditPoints();
@@ -96,8 +96,8 @@ export default class Shape{
     if (MouseX < this.x && MouseY > this.y) {
       const diffX = (this.x - this.width / 2) - MouseX;
       const diffY = MouseY - (this.y + this.height / 2);
-      this.width = this.width + (diffX);
-      this.height = this.height + (diffY);
+      this.width = this.width + diffX;
+      this.height = this.height + diffY;
       this.x = this.x - diffX / 2;
       this.y = this.y + diffY / 2;
       this.changeEditPoints();
@@ -105,8 +105,8 @@ export default class Shape{
     if (MouseX > this.x && MouseY > this.y) {
       const diffX = MouseX -(this.x + this.width / 2);
       const diffY = MouseY - (this.y + this.height / 2);
-      this.width = this.width + (diffX);
-      this.height = this.height + (diffY);
+      this.width = this.width + diffX;
+      this.height = this.height + diffY;
       this.x = this.x + diffX / 2;
       this.y = this.y + diffY / 2;
       this.changeEditPoints();

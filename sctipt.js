@@ -14,7 +14,7 @@ const cloneCanvas = new CloneCanvas(canvas);
 const cloneCanvasElement = cloneCanvas.getCanvas();
 
 
-const editor = new Editor(canvasElement);
+const editor = new Editor(canvas);
 
 const tools = new Tools(canvas);
 
@@ -29,7 +29,7 @@ cloneCanvas.init(wrapper);
 canvas.init(wrapper, cloneCanvasElement);
 
 
-document.addEventListener('mouseup', () => painter.changeMouseStatusOnFalse());
+canvasElement.addEventListener('mouseup', () => editor.changeMouseStatusOnFalse());
 
 canvasElement.addEventListener('mousedown', (event) => editor.editShape(event, canvas));
 

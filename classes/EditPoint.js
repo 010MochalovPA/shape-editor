@@ -21,9 +21,9 @@ export default class EditPoint{
     }
   }
 
-  
-
   getParentShape(){
     return this.shape;
   }
+
+  
 }

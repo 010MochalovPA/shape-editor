@@ -1,3 +1,5 @@
+import saver from './Saver.js'
+
 export default class Canvas{
   constructor(){
     this.canvas = document.createElement('canvas');
@@ -30,6 +32,8 @@ export default class Canvas{
     ctx.fillStyle = 'white';
     ctx.fillRect(0,0,this.canvas.width,this.canvas.height);
     ctx.fill();
+    saver.addFrame([]);
+
   }
 
   
