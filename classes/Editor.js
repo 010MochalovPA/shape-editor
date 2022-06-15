@@ -27,7 +27,6 @@ export default class Editor{
     };
     if (this.target instanceof Shape){
       canvas.addEditPoints(this.target.getEditPoints());
-      this.target.isChanges();
       this.differenceX = this.MouseX - this.target.editArea.x;
       this.differenceY = this.MouseY - this.target.editArea.y;
       canvas.addEditShape(this.target);
@@ -66,7 +65,6 @@ export default class Editor{
     }
     
     if (event.ctrlKey && event.keyCode == 90) {
-      actions.revert(canvas);
       console.log("Ctrl+Z");
     }
   }

@@ -6,13 +6,21 @@ export default class Canvas{
   constructor(cloneCanvas){
     this.canvas = document.createElement('canvas');
     this.canvas.id = 'canvas';
-    this.canvas.width = window.innerWidth - 300;
+    this.canvas.width = window.innerHeight - 78;
     this.canvas.height = window.innerHeight - 78;
     this.cloneCanvas = cloneCanvas;
     this.isMouseDown = false;
     this.elements = [];
     this.editPoints = [];
     this.editShape = null;
+  }
+
+  getWidth(){
+    return this.canvas.width;
+  }
+
+  getHeight(){
+    return this.canvas.height;
   }
 
   getElements(){

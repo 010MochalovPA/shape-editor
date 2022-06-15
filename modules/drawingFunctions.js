@@ -7,7 +7,7 @@ const drawingFunctions = {
     shapes.addShape(`ellipse`, newShape, canvas);
   },
   triangle: (canvas) => {
-    const newShape = new ShapeTriangle(`triangle${shapes.getSize()}`, canvas);
+    const newShape = new ShapeTriangle(`triangle${shapes.getSize()}`, canvas,  {width: 250, height: 225} );
     shapes.addShape(`triangle`, newShape, canvas);
   },
   rectangle: (canvas) => {

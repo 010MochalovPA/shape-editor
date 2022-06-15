@@ -110,16 +110,6 @@ export default class Shape{
       this.changeEditPoints();
     }
   }
-
-  isChanges(){
-    this.isEdit = true;
-  }
-  notChanges(){
-    this.isEdit = false;
-  }
-  getEdit(){
-    return this.isEdit;
-  }
 }
 
 class ShapeEllipse extends Shape{

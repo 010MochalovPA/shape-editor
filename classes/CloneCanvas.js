@@ -1,8 +1,9 @@
 export default class CloneCanvas{
-  constructor(){
+  constructor(parentCanvas){
     this.canvas = document.createElement('canvas');
+    this.parentCanvas = parentCanvas
     this.canvas.id = 'cloneCanvas';
-    this.canvas.width = window.innerWidth;
+    this.canvas.width = window.innerHeight - 78;
     this.canvas.height = window.innerHeight - 78;
   }
 
