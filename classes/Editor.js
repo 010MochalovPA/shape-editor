@@ -1,5 +1,5 @@
 import Shape from './Shape.js';
-
+import painter from './Painter.js';
 import EditPoint from "./EditPoint.js";
 
 export default class Editor{
@@ -18,19 +18,18 @@ export default class Editor{
     let rect = canvas.getCanvas().getBoundingClientRect();
     this.MouseX = event.clientX - rect.left;
     this.MouseY = event.clientY - rect.top;
-    this.target = canvas.checkClick(event);
+    this.target = painter.checkClick(event, canvas.getCanvas());
     if (!this.target) {
-      canvas.clearEdit();
-      canvas.redraw();
+      painter.clearEdit();
+      painter.redrawAll(canvas.getCanvas());
       return;
     };
     if (this.target instanceof Shape){
-      canvas.addEditPoints(this.target.getEditPoints());
-      this.target.isChanges();
-      this.differenceX = this.MouseX - this.target.editArea.x;
-      this.differenceY = this.MouseY - this.target.editArea.y;
-      canvas.addEditShape(this.target);
-      canvas.redraw();
+      painter.addEditPoints(this.target.getEditPoints());
+      this.differenceX = this.MouseX - this.target.x;
+      this.differenceY = this.MouseY - this.target.y;
+      painter.addEditShape(this.target);
+      painter.redrawAll(canvas.getCanvas());
     }
     
   }
@@ -43,26 +42,33 @@ export default class Editor{
     this.MouseY = event.clientY - rect.top;
 
     if (this.target instanceof Shape){
-      canvas.addEditPoints(this.target.getEditPoints(), this.target);
-      if (canvas.getMouseStatus()){
+      painter.addEditPoints(this.target.getEditPoints(), this.target);
+      if (painter.getMouseStatus()){
         this.target.changePosition(this.MouseX - this.differenceX, this.MouseY - this.differenceY);
-        canvas.addEditPoints(this.target.getEditPoints(), this.target);
-        canvas.redraw();
+        painter.addEditPoints(this.target.getEditPoints(), this.target);
+        painter.redrawAll(canvas.getCanvas());
       }
     } else if (this.target instanceof EditPoint) {
-      if (canvas.getMouseStatus()){
+      if (painter.getMouseStatus()){
         const transformShape = this.target.getParentShape();
         transformShape.editScale(this.MouseX, this.MouseY);
-        canvas.addEditPoints(transformShape.getEditPoints(), transformShape);
-        canvas.redraw();
+        painter.addEditPoints(transformShape.getEditPoints(), transformShape);
+        painter.redrawAll(canvas.getCanvas());
       }
     } 
   }
 
   keyPressed(event, canvas){
     if (event.keyCode == 46){
-      canvas.deleteShape(this.target);
+      if (this.target) canvas.deleteShape(this.target);
     }
     
+    if (event.ctrlKey && event.keyCode == 90) {
+      console.log("Ctrl+Z");
+    }
+
+    if (event.ctrlKey && event.keyCode == 89) {
+      console.log("Ctrl+Y");
+    }
   }
 }
