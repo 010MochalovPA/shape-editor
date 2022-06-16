@@ -28,11 +28,11 @@ cloneCanvas.init(wrapper);
 canvas.init(wrapper, cloneCanvasElement);
 
 
-document.body.addEventListener('mouseup', () => editor.changeMouseStatusOnFalse());
+window.addEventListener('mouseup', () => editor.changeMouseStatusOnFalse());
 
 canvasElement.addEventListener('mousedown', (event) => editor.editShape(event, canvas));
 
-document.body.addEventListener('mousemove', (event) => editor.moveShape(event, canvas));
+window.addEventListener('mousemove', (event) => editor.moveShape(event, canvas));
 
 document.addEventListener('keydown', (event) => editor.keyPressed(event, canvas));
 
