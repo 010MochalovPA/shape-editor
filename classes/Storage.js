@@ -7,12 +7,13 @@ class Storage{
 
   addValue(value){
     this.storage.push(value);
-    saver.addFrame(this.storage);
     editor.clearEdit();
+    saver.addFrame(this.storage);
   }
 
   rewriteStorage(frame){
     this.storage = frame;
+    editor.clearEdit();
   }
 
   getSize(){

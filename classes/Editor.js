@@ -82,7 +82,6 @@ export default class Editor{
     
     if (event.ctrlKey && event.keyCode == 90) {
       console.log("Ctrl+Z");
-      this.clearEdit();
       shapeStorage.rewriteStorage(saver.prevFrame());
       painter.redrawAll(canvas.getCanvas());
       painter.redraw(canvas.getClone());

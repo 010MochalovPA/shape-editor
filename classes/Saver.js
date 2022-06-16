@@ -4,32 +4,49 @@ class Saver{
     this.index = 0;
   }
 
+  increaceIndex(){
+    this.index++;
+  }
+
+  decreaseIndex(){
+    this.index--;
+  }
+
   addFrame(elements){
-    console.log('создаем кадр')
-    let cloneArr = []
+
+    if (this.index < this.frames.length){
+      this.frames.length = this.index + 1;
+    }
+
+    
+    let cloneArr = [];
+
     elements.forEach((element) => {
-      cloneArr.push(Object.assign( Object.create( Object.getPrototypeOf(element)), element))
+      cloneArr.push(Object.assign(Object.create( Object.getPrototypeOf(element)), element))
     });
     
-    if (this.index < this.frames.length){
-      this.frames.splice(this.index - 1, this.frames.length - this.index);
-    }
     
+    console.log(this.index);
     if (this.frames.length === 0) {
       this.frames.push(cloneArr);
-      this.index++;
-      console.log(`прибавляем индекс`)
-      return;
+      console.log('длинна меньше 0')
     }
-    console.log(this.frames[this.index - 1]);
-    console.log(this.index);
-    console.log(cloneArr);
+
+    
     console.log(!this.isEqual(this.frames[this.index - 1], cloneArr));
     if (!this.isEqual(this.frames[this.index - 1], cloneArr)) {
+      console.log(this.frames);
+      console.log('индекс: ' + this.index)
+      console.log('длинна: ' + this.frames.length)
+      console.log(this.frames[this.index - 1]);
+      console.log(cloneArr);
+      
+      console.log(cloneArr);
       this.frames.push(cloneArr);
-      this.index++;
-      console.log(`прибавляем индекс`)
+    } else {
+      this.decreaseIndex();
     }
+    this.increaceIndex();
   }
 
   getFrames(){
@@ -37,10 +54,11 @@ class Saver{
   }
   
   prevFrame(){
-    this.index = this.index - 1;
-    console.log(this.index)
+    this.decreaseIndex();
+    console.log(this.index);
     if (this.index < 1) return this.frames[0];
-    return this.frames[this.index - 1];
+    console.log(this.frames[this.index]);
+    return this.frames[this.index];
   }
 
   isEqual(frame, clone) {
