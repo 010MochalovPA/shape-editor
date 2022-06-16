@@ -16,7 +16,7 @@ class Saver{
       return;
     }
 
-    if (this.isEqual(this.frames[this.index - 2], cloneFrame)) {
+    if (this.isEqual(this.frames[this.index - 1], cloneFrame)) {
       this.index--;
       return;
     }
@@ -26,6 +26,7 @@ class Saver{
     }
 
     this.frames.push(cloneFrame);
+    console.log(this.frames);
   }
 
   getFrames(){

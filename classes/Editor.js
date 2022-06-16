@@ -97,8 +97,10 @@ export default class Editor{
 
   keyPressed(event, canvas){
     if (event.keyCode == 46){
-      this.clearEdit();
+      
       if (this.target) shapeStorage.deleteShape(this.target);
+      this.target = null;
+      this.clearEdit();
       painter.redrawAll(canvas.getCanvas());
       painter.redraw(canvas.getClone());
       saver.addFrame(shapeStorage.getStorage());
