@@ -14,10 +14,10 @@ export default class Editor{
     this.MouseX = 0;
     this.MouseY = 0;
     this.editPoints = [];
-    this.scaleFunction = ()=>{};
+    this.scaleFunction = () => {};
   }
 
-  getEditPoints() {
+  getEditPoints(){
     return this.editPoints;
   }
 
@@ -76,6 +76,7 @@ export default class Editor{
     let rect = canvas.getCanvas().getBoundingClientRect();
     this.MouseX = event.clientX - rect.left;
     this.MouseY = event.clientY - rect.top;
+
     if (this.target instanceof Shape){
       this.addEditPoints(this.target.getEditPoints(), this.target);
       if (this.getMouseStatus()){
