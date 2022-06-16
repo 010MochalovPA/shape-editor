@@ -3,7 +3,7 @@ export default class CloneCanvas{
     this.canvas = document.createElement('canvas');
     this.parentCanvas = parentCanvas
     this.canvas.id = 'cloneCanvas';
-    this.canvas.width = window.innerWidth - 300;
+    this.canvas.width = window.innerHeight * 1.5;
     this.canvas.height = window.innerHeight - 78;
   }
 

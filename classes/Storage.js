@@ -1,22 +1,31 @@
+import saver from './Saver.js';
+import editor from '../sctipt.js';
 class Storage{
   constructor(){
-    this.storage = new Map();
+    this.storage = [];
   }
 
-  addValue(key, value){
-    this.storage.set(key, value);
+  addValue(value){
+    this.storage.push(value);
+    editor.clearEdit();
+    saver.addFrame(this.storage);
   }
 
-  removeValue(key){
-    this.storage.delete(key);
+  rewriteStorage(frame){
+    this.storage = frame;
+    editor.clearEdit();
   }
 
   getSize(){
-    return this.storage.size;
+    return this.storage.length;
   }
 
   getStorage(){
     return this.storage;
+  }
+  deleteShape(element){
+    const index = this.storage.indexOf(element);
+    this.storage.splice(index,1);
   }
 }
 

@@ -1,7 +1,7 @@
 export default class Shape{
   constructor(name, canvas, width = 400, height = 200, x = canvas.getCanvas().width / 2, y = canvas.getCanvas().height / 2){
     this.name = name;
-    this.color = '#' + Math.random().toString(16).substring(2,8).toUpperCase();
+    this.color = this.getRandomColor();
     this.canvas = canvas.getCanvas();
     this.x = x,
     this.y = y,
@@ -13,7 +13,10 @@ export default class Shape{
       [this.x + this.width / 2, this.y - this.height / 2],
       [this.x + this.width / 2, this.y + this.height / 2],
     ]
-    this.isEdit = false;
+  }
+
+  getRandomColor(){
+    return '#' + (Math.random().toString(16)).substring(2,8).toUpperCase()
   }
 
   getName(){
@@ -41,7 +44,6 @@ export default class Shape{
   }
 
   changePosition(x, y){
-    console.log('changePosition')
     if (x - this.width / 2 <= 8) x = this.width / 2 + 8;
     if (y - this.height / 2 <= 8) y = this.height / 2 + 8;
     if (x + this.width / 2 >= this.canvas.width - 8) x = this.canvas.width - this.width / 2 - 8;
@@ -70,94 +72,126 @@ export default class Shape{
       ctx.strokeStyle = 'black';
       ctx.rect(this.x - this.width / 2, this.y - this.height / 2, this.width, this.height);
       ctx.stroke();
-      
     }
   }
+  getXY(){
+    return [this.x,this.y];
+  }
+  
+  scaleTopLeft(MouseX, MouseY){
+      if (MouseX <= 8) MouseX = 8;
+      if (MouseY <= 8) MouseY = 8;
+      if (MouseX >= this.x + this.width / 2 - 16) MouseX = this.x + this.width / 2 - 16;
+      if (MouseY >= this.y + this.height / 2 - 16) MouseY = this.y + this.height / 2 - 16;
 
-  editScale(MouseX, MouseY){
-    if (MouseX < this.x && MouseY < this.y){
       const diffX = (this.x - this.width / 2) - MouseX;
-      const diffY = (this.y - this.height / 2)- MouseY;
-      this.width = this.width + (diffX);
-      this.height = this.height + (diffY);
+      const diffY = (this.y - this.height / 2) - MouseY;
+
+      this.width = this.width + diffX;
+      this.height = this.height + diffY;
+
       this.x = this.x - diffX / 2;
       this.y = this.y - diffY / 2;
+
       this.changeEditPoints();
-    }
-    if (MouseX > this.x && MouseY < this.y) {
+  }
+  
+  scaleTopRight(MouseX, MouseY){
+      if (MouseX >= this.canvas.width - 8) MouseX = this.canvas.width - 8;
+      if (MouseY <= 8) MouseY = 8;
+      if (MouseX <= this.x - this.width / 2 + 16) MouseX = this.x - this.width / 2 + 16;
+      if (MouseY >= this.y + this.height / 2 - 16) MouseY = this.y + this.height / 2 - 16; 
+  
       const diffX = MouseX -(this.x + this.width / 2);
       const diffY = (this.y - this.height / 2) - MouseY;
-      this.width = this.width + (diffX);
-      this.height = this.height + (diffY);
+      
+      this.width = this.width + diffX;
+      this.height = this.height + diffY;
+      
       this.x = this.x + diffX / 2;
       this.y = this.y - diffY / 2;
+      
       this.changeEditPoints();
-    }
-    if (MouseX < this.x && MouseY > this.y) {
+  }
+
+  scaleBottomLeft(MouseX, MouseY){
+      if (MouseX <= 8) MouseX = 8;
+      if (MouseY >= this.canvas.height - 8) MouseY = this.canvas.height - 8;
+      if (MouseX >= this.x + this.width / 2 - 16) MouseX = this.x + this.width / 2 - 16; 
+      if (MouseY <= this.y - this.height / 2 + 16) MouseY = this.y - this.height / 2 + 16;
+
       const diffX = (this.x - this.width / 2) - MouseX;
       const diffY = MouseY - (this.y + this.height / 2);
-      this.width = this.width + (diffX);
-      this.height = this.height + (diffY);
+
+      this.width = this.width + diffX;
+      this.height = this.height + diffY;
+
       this.x = this.x - diffX / 2;
       this.y = this.y + diffY / 2;
+
       this.changeEditPoints();
-    }
-    if (MouseX > this.x && MouseY > this.y) {
-      const diffX = MouseX -(this.x + this.width / 2);
-      const diffY = MouseY - (this.y + this.height / 2);
-      this.width = this.width + (diffX);
-      this.height = this.height + (diffY);
-      this.x = this.x + diffX / 2;
-      this.y = this.y + diffY / 2;
-      this.changeEditPoints();
-    }
+  }
+
+  scaleBottomRight(MouseX, MouseY){
+    if (MouseX >= this.canvas.width - 8) MouseX = this.canvas.width - 8;
+    if (MouseY >= this.canvas.height - 8) MouseY = this.canvas.height - 8;
+    if (MouseX <= this.x - this.width / 2 + 16) MouseX = this.x - this.width / 2 + 16;
+    if (MouseY <= this.y - this.height / 2 + 16) MouseY = this.y - this.height / 2 + 16;
+
+    const diffX = MouseX -(this.x + this.width / 2);
+    const diffY = MouseY - (this.y + this.height / 2);
+
+    this.width = this.width + diffX;
+    this.height = this.height + diffY;
+
+    this.x = this.x + diffX / 2;
+    this.y = this.y + diffY / 2;
+
+    this.changeEditPoints();
   }
 }
 
 class ShapeEllipse extends Shape{
-  draw(canvas, checkX = 0,checkY = 0){
-    if (canvas.getContext){      
-      let ctx = canvas.getContext('2d');
-      ctx.setLineDash([]);
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.fillStyle = this.color;
-      ctx.ellipse(this.x, this.y, this.width / 2,  this.height / 2, 0, 0, Math.PI*2);
-      ctx.fill();
-      if (ctx.isPointInPath(checkX, checkY)) return this;
-    }
+  draw(canvas, checkX = 0,checkY = 0){    
+    let ctx = canvas.getContext('2d');
+    ctx.setLineDash([]);
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.fillStyle = this.color;
+    ctx.ellipse(this.x, this.y, this.width / 2,  this.height / 2, 0, 0, Math.PI*2);
+    ctx.fill();
+    
+    if (ctx.isPointInPath(checkX, checkY)) return this;
   }
 }
 
 class ShapeTriangle extends Shape{
   draw(canvas, checkX = 0, checkY = 0){
-    if (canvas.getContext){
-      let ctx = canvas.getContext('2d');
-      ctx.setLineDash([]);
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.fillStyle = this.color;
-      ctx.moveTo(this.x, this.y - this.height / 2);
-      ctx.lineTo(this.x - this.width / 2, this.y + this.height / 2);
-      ctx.lineTo(this.x + this.width / 2, this.y + this.height / 2);
-      ctx.fill();
-      if (ctx.isPointInPath(checkX, checkY)) return this;
-    }
+    let ctx = canvas.getContext('2d');
+    ctx.setLineDash([]);
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.fillStyle = this.color;
+    ctx.moveTo(this.x, this.y - this.height / 2);
+    ctx.lineTo(this.x - this.width / 2, this.y + this.height / 2);
+    ctx.lineTo(this.x + this.width / 2, this.y + this.height / 2);
+    ctx.fill();
+
+    if (ctx.isPointInPath(checkX, checkY)) return this;
   }
 }
 
 class ShapeRectangle extends Shape{
   draw(canvas, checkX = 0, checkY = 0){
-    if (canvas.getContext){
-      let ctx = canvas.getContext('2d');
-      ctx.setLineDash([]);
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.fillStyle = this.color;
-      ctx.rect(this.x - this.width / 2, this.y - this.height / 2, this.width, this.height);
-      ctx.fill();
-      if (ctx.isPointInPath(checkX, checkY)) return this;
-    }
+    let ctx = canvas.getContext('2d');
+    ctx.setLineDash([]);
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.fillStyle = this.color;
+    ctx.rect(this.x - this.width / 2, this.y - this.height / 2, this.width, this.height);
+    ctx.fill();
+    
+    if (ctx.isPointInPath(checkX, checkY)) return this;
   }
 }
 
