@@ -26,7 +26,6 @@ class Saver{
     }
 
     this.frames.push(cloneFrame);
-    console.log(this.frames);
   }
 
   getFrames(){
