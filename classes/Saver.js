@@ -41,11 +41,11 @@ class Saver{
     this.frames[this.index].forEach((element) => {
       cloneFrame.push(Object.assign(Object.create(Object.getPrototypeOf(element)), element))
     });
+
     return cloneFrame;
   }
 
   nextFrame(){
-
     if (this.index + 2 > this.frames.length) this.index = this.frames.length - 1;
     else this.index++;
 

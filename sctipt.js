@@ -1,7 +1,7 @@
-import Tools from "./classes/Tools.js";
-import Canvas from "./classes/Canvas.js";
-import Editor from "./classes/Editor.js";
-import CloneCanvas from "./classes/CloneCanvas.js";
+import Tools from './classes/Tools.js';
+import Canvas from './classes/Canvas.js';
+import Editor from './classes/Editor.js';
+import CloneCanvas from './classes/CloneCanvas.js';
 
 
 

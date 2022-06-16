@@ -1,6 +1,6 @@
 import Shape from './Shape.js';
 import painter from './Painter.js';
-import EditPoint from "./EditPoint.js";
+import EditPoint from './EditPoint.js';
 import shapeStorage from './Storage.js'
 import saver from './Saver.js';
 
@@ -102,13 +102,11 @@ export default class Editor{
       painter.redraw(canvas.getClone());
       saver.addFrame(shapeStorage.getStorage());
     }
-    
     if (event.ctrlKey && event.keyCode == 90) {
       shapeStorage.rewriteStorage(saver.prevFrame());
       painter.redrawAll(canvas.getCanvas());
       painter.redraw(canvas.getClone()); 
     }
-
     if (event.ctrlKey && event.keyCode == 89) {
       shapeStorage.rewriteStorage(saver.nextFrame());
       painter.redrawAll(canvas.getCanvas());
@@ -139,10 +137,9 @@ export default class Editor{
     if (result) return result;
     shapeStorage.getStorage().forEach(element => {
       if (element.draw(canvas, x, y)) result = element.draw(canvas, x, y);
-    });
+    });  
     return result;
   }
-
 
   addEditPoints(points, shape){
     this.editPoints = [];
@@ -150,5 +147,4 @@ export default class Editor{
       this.editPoints.push(new EditPoint(point[0], point[1], this, shape));
     });
   }
-
 }

@@ -82,7 +82,8 @@ export default class Shape{
       if (MouseX <= 8) MouseX = 8;
       if (MouseY <= 8) MouseY = 8;
       if (MouseX >= this.x + this.width / 2 - 16) MouseX = this.x + this.width / 2 - 16;
-      if (MouseY >= this.y + this.height / 2 - 16) MouseY = this.y + this.height / 2 - 16; 
+      if (MouseY >= this.y + this.height / 2 - 16) MouseY = this.y + this.height / 2 - 16;
+
       const diffX = (this.x - this.width / 2) - MouseX;
       const diffY = (this.y - this.height / 2) - MouseY;
 
@@ -116,7 +117,6 @@ export default class Shape{
   scaleBottomLeft(MouseX, MouseY){
       if (MouseX <= 8) MouseX = 8;
       if (MouseY >= this.canvas.height - 8) MouseY = this.canvas.height - 8;
-
       if (MouseX >= this.x + this.width / 2 - 16) MouseX = this.x + this.width / 2 - 16; 
       if (MouseY <= this.y - this.height / 2 + 16) MouseY = this.y - this.height / 2 + 16;
 
@@ -135,7 +135,6 @@ export default class Shape{
   scaleBottomRight(MouseX, MouseY){
     if (MouseX >= this.canvas.width - 8) MouseX = this.canvas.width - 8;
     if (MouseY >= this.canvas.height - 8) MouseY = this.canvas.height - 8;
-
     if (MouseX <= this.x - this.width / 2 + 16) MouseX = this.x - this.width / 2 + 16;
     if (MouseY <= this.y - this.height / 2 + 16) MouseY = this.y - this.height / 2 + 16;
 
@@ -153,49 +152,46 @@ export default class Shape{
 }
 
 class ShapeEllipse extends Shape{
-  draw(canvas, checkX = 0,checkY = 0){
-    if (canvas.getContext){      
-      let ctx = canvas.getContext('2d');
-      ctx.setLineDash([]);
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.fillStyle = this.color;
-      ctx.ellipse(this.x, this.y, this.width / 2,  this.height / 2, 0, 0, Math.PI*2);
-      ctx.fill();
-      if (ctx.isPointInPath(checkX, checkY)) return this;
-    }
+  draw(canvas, checkX = 0,checkY = 0){    
+    let ctx = canvas.getContext('2d');
+    ctx.setLineDash([]);
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.fillStyle = this.color;
+    ctx.ellipse(this.x, this.y, this.width / 2,  this.height / 2, 0, 0, Math.PI*2);
+    ctx.fill();
+    
+    if (ctx.isPointInPath(checkX, checkY)) return this;
   }
 }
 
 class ShapeTriangle extends Shape{
   draw(canvas, checkX = 0, checkY = 0){
-    if (canvas.getContext){
-      let ctx = canvas.getContext('2d');
-      ctx.setLineDash([]);
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.fillStyle = this.color;
-      ctx.moveTo(this.x, this.y - this.height / 2);
-      ctx.lineTo(this.x - this.width / 2, this.y + this.height / 2);
-      ctx.lineTo(this.x + this.width / 2, this.y + this.height / 2);
-      ctx.fill();
-      if (ctx.isPointInPath(checkX, checkY)) return this;
-    }
+    let ctx = canvas.getContext('2d');
+    ctx.setLineDash([]);
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.fillStyle = this.color;
+    ctx.moveTo(this.x, this.y - this.height / 2);
+    ctx.lineTo(this.x - this.width / 2, this.y + this.height / 2);
+    ctx.lineTo(this.x + this.width / 2, this.y + this.height / 2);
+    ctx.fill();
+
+    if (ctx.isPointInPath(checkX, checkY)) return this;
   }
 }
 
 class ShapeRectangle extends Shape{
   draw(canvas, checkX = 0, checkY = 0){
-    if (canvas.getContext){
-      let ctx = canvas.getContext('2d');
-      ctx.setLineDash([]);
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.fillStyle = this.color;
-      ctx.rect(this.x - this.width / 2, this.y - this.height / 2, this.width, this.height);
-      ctx.fill();
-      if (ctx.isPointInPath(checkX, checkY)) return this;
-    }
+    let ctx = canvas.getContext('2d');
+    ctx.setLineDash([]);
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.fillStyle = this.color;
+    ctx.rect(this.x - this.width / 2, this.y - this.height / 2, this.width, this.height);
+    ctx.fill();
+    
+    if (ctx.isPointInPath(checkX, checkY)) return this;
   }
 }
 
