@@ -1,4 +1,4 @@
-import drawingFunctions from '../modules/drawingFunctions.js';
+import toolsFunctions from '../modules/toolsFunctions.js';
 import Tool from './Tool.js';
 
 export default class Tools{
@@ -9,7 +9,7 @@ export default class Tools{
   };
   
   fillTools(){
-    Object.entries(drawingFunctions).forEach(([name, func]) => {
+    Object.entries(toolsFunctions).forEach(([name, func]) => {
       this.tools.push(new Tool(name, () => func(this.canvas)));
     });
   }

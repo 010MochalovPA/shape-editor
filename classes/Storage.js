@@ -1,5 +1,5 @@
-import saver from "./Saver.js";
-import editor from "../sctipt.js"
+import saver from './Saver.js';
+import editor from '../sctipt.js';
 class Storage{
   constructor(){
     this.storage = [];

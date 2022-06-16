@@ -14,6 +14,7 @@ export default class Editor{
     this.MouseX = 0;
     this.MouseY = 0;
     this.editPoints = [];
+    this.scaleFunction = ()=>{};
   }
 
   getEditPoints() {
@@ -29,6 +30,7 @@ export default class Editor{
     this.MouseX = event.clientX - rect.left;
     this.MouseY = event.clientY - rect.top;
     this.target = this.checkClick(event, canvas.getCanvas());
+
     if (!this.target) {
       this.clearEdit();
       painter.redrawAll(canvas.getCanvas());
@@ -40,6 +42,26 @@ export default class Editor{
       this.differenceY = this.MouseY - this.target.y;
       painter.addEditShape(this.target);
       painter.redrawAll(canvas.getCanvas());
+      return;
+    }
+    if (this.target instanceof EditPoint){
+      const transformShape = this.target.getParentShape();
+
+      if (this.MouseX < transformShape.getX() && this.MouseY < transformShape.getY()){
+        this.scaleFunction = () => transformShape.scaleTopLeft(this.MouseX, this.MouseY);
+      }
+
+      if (this.MouseX > transformShape.getX() && this.MouseY < transformShape.getY()){
+        this.scaleFunction = () => transformShape.scaleTopRight(this.MouseX, this.MouseY);
+      }
+
+      if (this.MouseX < transformShape.getX() && this.MouseY > transformShape.getY()){
+        this.scaleFunction = () => transformShape.scaleBottomLeft(this.MouseX, this.MouseY);
+      }
+
+      if (this.MouseX > transformShape.getX() && this.MouseY > transformShape.getY()){
+        this.scaleFunction = () => transformShape.scaleBottomRight(this.MouseX, this.MouseY);
+      }
     }
     
   }
@@ -64,11 +86,12 @@ export default class Editor{
     } else if (this.target instanceof EditPoint) {
       if (this.getMouseStatus()){
         const transformShape = this.target.getParentShape();
-        transformShape.editScale(this.MouseX, this.MouseY);
+        this.scaleFunction(this.MouseX,this.MouseY);
+        
         this.addEditPoints(transformShape.getEditPoints(), transformShape);
         painter.redrawAll(canvas.getCanvas());
       }
-    } 
+    }
   }
 
   keyPressed(event, canvas){
@@ -81,16 +104,15 @@ export default class Editor{
     }
     
     if (event.ctrlKey && event.keyCode == 90) {
-      console.log("Ctrl+Z");
       shapeStorage.rewriteStorage(saver.prevFrame());
       painter.redrawAll(canvas.getCanvas());
-      painter.redraw(canvas.getClone());
-      
+      painter.redraw(canvas.getClone()); 
     }
 
     if (event.ctrlKey && event.keyCode == 89) {
-      console.log("Ctrl+Y");
-      
+      shapeStorage.rewriteStorage(saver.nextFrame());
+      painter.redrawAll(canvas.getCanvas());
+      painter.redraw(canvas.getClone()); 
     }
   }
 

@@ -1,7 +1,7 @@
 export default class Shape{
   constructor(name, canvas, width = 400, height = 200, x = canvas.getCanvas().width / 2, y = canvas.getCanvas().height / 2){
     this.name = name;
-    this.color = '#' + Math.random().toString(16).substring(2,8).toUpperCase();
+    this.color = this.getRandomColor();
     this.canvas = canvas.getCanvas();
     this.x = x,
     this.y = y,
@@ -13,6 +13,10 @@ export default class Shape{
       [this.x + this.width / 2, this.y - this.height / 2],
       [this.x + this.width / 2, this.y + this.height / 2],
     ]
+  }
+
+  getRandomColor(){
+    return '#' + (Math.random().toString(16)).substring(2,8).toUpperCase()
   }
 
   getName(){
@@ -74,43 +78,77 @@ export default class Shape{
     return [this.x,this.y];
   }
   
-  editScale(MouseX, MouseY){
-    if (MouseX < this.x && MouseY < this.y){
+  scaleTopLeft(MouseX, MouseY){
+      if (MouseX <= 8) MouseX = 8;
+      if (MouseY <= 8) MouseY = 8;
+      if (MouseX >= this.x + this.width / 2 - 16) MouseX = this.x + this.width / 2 - 16;
+      if (MouseY >= this.y + this.height / 2 - 16) MouseY = this.y + this.height / 2 - 16; 
       const diffX = (this.x - this.width / 2) - MouseX;
       const diffY = (this.y - this.height / 2) - MouseY;
+
       this.width = this.width + diffX;
       this.height = this.height + diffY;
+
       this.x = this.x - diffX / 2;
       this.y = this.y - diffY / 2;
+
       this.changeEditPoints();
-    }
-    if (MouseX > this.x && MouseY < this.y) {
+  }
+  
+  scaleTopRight(MouseX, MouseY){
+      if (MouseX >= this.canvas.width - 8) MouseX = this.canvas.width - 8;
+      if (MouseY <= 8) MouseY = 8;
+      if (MouseX <= this.x - this.width / 2 + 16) MouseX = this.x - this.width / 2 + 16;
+      if (MouseY >= this.y + this.height / 2 - 16) MouseY = this.y + this.height / 2 - 16; 
+  
       const diffX = MouseX -(this.x + this.width / 2);
       const diffY = (this.y - this.height / 2) - MouseY;
+      
       this.width = this.width + diffX;
       this.height = this.height + diffY;
+      
       this.x = this.x + diffX / 2;
       this.y = this.y - diffY / 2;
+      
       this.changeEditPoints();
-    }
-    if (MouseX < this.x && MouseY > this.y) {
+  }
+
+  scaleBottomLeft(MouseX, MouseY){
+      if (MouseX <= 8) MouseX = 8;
+      if (MouseY >= this.canvas.height - 8) MouseY = this.canvas.height - 8;
+
+      if (MouseX >= this.x + this.width / 2 - 16) MouseX = this.x + this.width / 2 - 16; 
+      if (MouseY <= this.y - this.height / 2 + 16) MouseY = this.y - this.height / 2 + 16;
+
       const diffX = (this.x - this.width / 2) - MouseX;
       const diffY = MouseY - (this.y + this.height / 2);
+
       this.width = this.width + diffX;
       this.height = this.height + diffY;
+
       this.x = this.x - diffX / 2;
       this.y = this.y + diffY / 2;
+
       this.changeEditPoints();
-    }
-    if (MouseX > this.x && MouseY > this.y) {
-      const diffX = MouseX -(this.x + this.width / 2);
-      const diffY = MouseY - (this.y + this.height / 2);
-      this.width = this.width + diffX;
-      this.height = this.height + diffY;
-      this.x = this.x + diffX / 2;
-      this.y = this.y + diffY / 2;
-      this.changeEditPoints();
-    }
+  }
+
+  scaleBottomRight(MouseX, MouseY){
+    if (MouseX >= this.canvas.width - 8) MouseX = this.canvas.width - 8;
+    if (MouseY >= this.canvas.height - 8) MouseY = this.canvas.height - 8;
+
+    if (MouseX <= this.x - this.width / 2 + 16) MouseX = this.x - this.width / 2 + 16;
+    if (MouseY <= this.y - this.height / 2 + 16) MouseY = this.y - this.height / 2 + 16;
+
+    const diffX = MouseX -(this.x + this.width / 2);
+    const diffY = MouseY - (this.y + this.height / 2);
+
+    this.width = this.width + diffX;
+    this.height = this.height + diffY;
+
+    this.x = this.x + diffX / 2;
+    this.y = this.y + diffY / 2;
+
+    this.changeEditPoints();
   }
 }
 

@@ -2,7 +2,7 @@ import shapeStorage from '../classes/Storage.js';
 import painter from '../classes/Painter.js';
 import { ShapeEllipse, ShapeTriangle, ShapeRectangle } from '../classes/Shape.js';
 
-const drawingFunctions = {
+const toolsFunctions = {
   ellipse: (canvas) => {
     const newShape = new ShapeEllipse(`ellipse${shapeStorage.getSize()}`, canvas);
     shapeStorage.addValue(newShape);
@@ -23,4 +23,4 @@ const drawingFunctions = {
   },
 }
 
-export default drawingFunctions;
+export default toolsFunctions;

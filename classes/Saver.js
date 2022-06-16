@@ -1,52 +1,31 @@
 class Saver{
   constructor(){
-    this.frames = [];
+    this.frames = [[],];
     this.index = 0;
   }
 
-  increaceIndex(){
-    this.index++;
-  }
-
-  decreaseIndex(){
-    this.index--;
-  }
-
   addFrame(elements){
-
-    if (this.index < this.frames.length){
-      this.frames.length = this.index + 1;
-    }
-
-    
-    let cloneArr = [];
-
+    this.index++;
+    let cloneFrame = []
     elements.forEach((element) => {
-      cloneArr.push(Object.assign(Object.create( Object.getPrototypeOf(element)), element))
+      cloneFrame.push(Object.assign(Object.create( Object.getPrototypeOf(element)), element))
     });
-    
-    
-    console.log(this.index);
+
     if (this.frames.length === 0) {
-      this.frames.push(cloneArr);
-      console.log('длинна меньше 0')
+      this.frames.push(cloneFrame);
+      return;
     }
 
-    
-    console.log(!this.isEqual(this.frames[this.index - 1], cloneArr));
-    if (!this.isEqual(this.frames[this.index - 1], cloneArr)) {
-      console.log(this.frames);
-      console.log('индекс: ' + this.index)
-      console.log('длинна: ' + this.frames.length)
-      console.log(this.frames[this.index - 1]);
-      console.log(cloneArr);
-      
-      console.log(cloneArr);
-      this.frames.push(cloneArr);
-    } else {
-      this.decreaseIndex();
+    if (this.isEqual(this.frames[this.index - 2], cloneFrame)) {
+      this.index--;
+      return;
     }
-    this.increaceIndex();
+
+    if (this.index - 1 < this.frames.length){
+      this.frames.length = this.index;
+    }
+
+    this.frames.push(cloneFrame);
   }
 
   getFrames(){
@@ -54,12 +33,32 @@ class Saver{
   }
   
   prevFrame(){
-    this.decreaseIndex();
-    console.log(this.index);
-    if (this.index < 1) return this.frames[0];
-    console.log(this.frames[this.index]);
-    return this.frames[this.index];
+    if (this.index - 1 < 0) this.index = 0;
+    else this.index--;
+
+    let cloneFrame = [];
+    
+    this.frames[this.index].forEach((element) => {
+      cloneFrame.push(Object.assign(Object.create(Object.getPrototypeOf(element)), element))
+    });
+    return cloneFrame;
   }
+
+  nextFrame(){
+
+    if (this.index + 2 > this.frames.length) this.index = this.frames.length - 1;
+    else this.index++;
+
+    let cloneFrame = [];
+    
+    this.frames[this.index].forEach((element) => {
+      cloneFrame.push(Object.assign(Object.create(Object.getPrototypeOf(element)), element))
+    });
+
+    return cloneFrame;
+    
+  }
+
 
   isEqual(frame, clone) {
     if (!frame || !clone) return false;

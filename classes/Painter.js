@@ -1,6 +1,5 @@
 import shapeStorage from './Storage.js';
-import editor from '../sctipt.js'
-import saver from './Saver.js'
+import editor from "../sctipt.js"
 
 class Painter{
   constructor(){
