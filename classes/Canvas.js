@@ -2,7 +2,7 @@ export default class Canvas{
   constructor(){
     this.canvas = document.createElement('canvas');
     this.canvas.id = 'canvas';
-    this.canvas.width = window.innerWidth - 300;
+    this.canvas.width = window.innerHeight * 1.5;
     this.canvas.height = window.innerHeight - 78;
     this.cloneCanvas = null;
     this.isMouseDown = false;

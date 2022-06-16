@@ -1,8 +1,7 @@
 import Tools from "./classes/Tools.js";
 import Canvas from "./classes/Canvas.js";
-import Editor from "./classes/Editor.js"; // создавать в классе
+import Editor from "./classes/Editor.js";
 import CloneCanvas from "./classes/CloneCanvas.js";
-import painter from "./classes/Painter.js";
 
 
 
@@ -31,7 +30,7 @@ canvas.init(wrapper, cloneCanvasElement);
 
 canvasElement.addEventListener('mouseup', () => editor.changeMouseStatusOnFalse());
 
-// canvasElement.addEventListener('mouseleave', () => editor.changeMouseStatusOnFalse());
+canvasElement.addEventListener('mouseleave', () => editor.changeMouseStatusOnFalse());
 
 canvasElement.addEventListener('mousedown', (event) => editor.editShape(event, canvas));
 
